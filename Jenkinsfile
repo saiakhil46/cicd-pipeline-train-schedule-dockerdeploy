@@ -23,12 +23,10 @@ pipeline {
                 branch 'master'
             }
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
-                        app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
-                    }
-                }
+              withDockerRegistry([ credentialsId: "docker_hub_login", url: "https://registry.hub.docker.com" ]) {
+              sh 'sudo docker tag saiakhil46/train-schedule saiakhil46/train-schedule:${env.BUILD_NUMBER}'
+              sh 'sudo docker push saiakhil46/train-schedule:${env.BUILD_NUMBER}'
+              }
             }
         }
         stage('DeployToProduction') {
