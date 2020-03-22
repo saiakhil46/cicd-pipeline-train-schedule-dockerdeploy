@@ -14,7 +14,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh "docker build -t saiakhil46/train-schedule ."
+                    sh "sudo docker build -t saiakhil46/train-schedule ."
                 }
             }
         }
