@@ -23,7 +23,8 @@ pipeline {
                 branch 'master'
             }
             steps {
-              withDockerRegistry([ credentialsId: "docker_hub_login", url: "" ]) {
+              withCredentials([usernamePassword(credentialsId: 'docker_hub_login', usernameVariable: 'USERNAME', passwordVariable: 'USERPASS')]) {
+              sh 'sudo docker login -u $USERNAME -p $PASSWORD'
               sh 'sudo docker tag saiakhil46/train-schedule saiakhil46/train-schedule:${env.BUILD_NUMBER}'
               sh 'sudo docker push saiakhil46/train-schedule:${env.BUILD_NUMBER}'
               }
